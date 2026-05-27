@@ -1,10 +1,14 @@
 const express = require('express');
 const cors    = require('cors');
+const path    = require('path');
 require('dotenv').config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Servir imágenes estáticas
+app.use('/uploads', express.static(path.join(__dirname, '../public/uploads')));
 
 // Rutas
 app.use('/api/auth',           require('./routes/auth.routes'));
@@ -13,7 +17,8 @@ app.use('/api/categorias',     require('./routes/categorias.routes'));
 app.use('/api/carrito',        require('./routes/carrito.routes'));
 app.use('/api/pedidos',        require('./routes/pedidos.routes'));
 app.use('/api/calificaciones', require('./routes/calificaciones.routes'));
-app.use('/api/usuarios', require('./routes/usuarios.routes'));
+app.use('/api/usuarios',       require('./routes/usuarios.routes'));
+app.use('/api/uploads',        require('./routes/uploads.routes'));
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () =>
